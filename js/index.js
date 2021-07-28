@@ -6,7 +6,21 @@
 
     const displayAllTasks = document.querySelector("#renderedTasks");
 
-    const renderTask = (task) => {
+    const updateTask = (requestBody) => {
+    }
+
+    const saveTask = (requestBody) => {
+        console.log(requestBody);
+        axios.post(`${baseUrl}/create`, requestBody)
+            .then(res => {
+                getAllTasks();
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
+
+    const renderTask = (task, empty) => {
         const renderedTask = document.createElement('div');
 
         const taskName = document.createElement('input');
@@ -18,7 +32,7 @@
         renderedTask.appendChild(taskDesciption);
 
         const taskpriority = document.createElement('input');
-        taskpriority.value = task.dueDate;
+        taskpriority.value = task.priority;
         renderedTask.appendChild(taskpriority);
 
         const taskTimeEstimate = document.createElement('input');
@@ -33,22 +47,50 @@
         const saveButton = document.createElement('button');
         saveButton.textContent = 'save';
         renderedTask.appendChild(saveButton); 
+        saveButton.addEventListener('click', () =>{
 
-        const deleteButton = document.createElement('button');
-        deleteButton.textContent = 'delete';
-        renderedTask.appendChild(deleteButton); 
+            const requestBody = {
+                'dueDate':`${taskDueDate.value}`,
+                'name':`${taskName.value}`,
+                'description':`${taskDesciption.value}`,
+                'priority': `${taskpriority.value}`,
+                'timeEstimateMinutes': `${taskTimeEstimate.value}`
+            }
+            if(!empty){
+                updateTask(requestBody);
+            }else{
+                saveTask(requestBody);
+            }
+        })
 
+        if(!empty){
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'delete';
+            renderedTask.appendChild(deleteButton); 
+        }
         displayAllTasks.appendChild(renderedTask);
     }
 
     const getTaskFromTasks = (tasks) => {
 
         tasks.forEach(task => {
-            renderTask(task);
+            renderTask(task, false);
         });
+
+        const emtpyJson =  
+            {
+                "dueDate":"",
+                "name":"",
+                "description":"",
+                "priority": 0,
+                "timeEstimateMinutes": 0
+            }
+
+        renderTask(emtpyJson, true);
     }
 
     const getAllTasks = () => {
+        displayAllTasks.innerHTML = "";
         axios.get(`${baseUrl}/getAll`)
             .then(res=>{
                 console.log(res);
