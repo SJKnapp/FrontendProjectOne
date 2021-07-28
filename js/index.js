@@ -9,25 +9,25 @@
     const renderTask = (task) => {
         const renderedTask = document.createElement('div');
 
-        const taskName = document.createElement('p');
-        taskName.classList =  'inline';
-        taskName.textContent = task.name;
+        const taskName = document.createElement('input');
+        taskName.value = task.name;
         renderedTask.appendChild(taskName);
 
-        const taskDesciption = document.createElement('p');
-        taskDesciption.textContent = task.description;
+        const taskDesciption = document.createElement('input');
+        taskDesciption.value = task.description;
         renderedTask.appendChild(taskDesciption);
 
-        const taskpriority = document.createElement('p');
-        taskpriority.textContent = task.dueDate;
+        const taskpriority = document.createElement('input');
+        taskpriority.value = task.dueDate;
         renderedTask.appendChild(taskpriority);
 
-        const taskTimeEstimate = document.createElement('p');
-        taskTimeEstimate.textContent = task.timeEstimateMinutes;
+        const taskTimeEstimate = document.createElement('input');
+        taskTimeEstimate.value = task.timeEstimateMinutes;
         renderedTask.appendChild(taskTimeEstimate);
 
-        const taskDueDate = document.createElement('p');
-        taskDueDate.textContent = task.dueDate;
+        const taskDueDate = document.createElement('input');
+        taskDueDate.type="date";
+        taskDueDate.value = task.dueDate;
         renderedTask.appendChild(taskDueDate);    
 
         const saveButton = document.createElement('button');
