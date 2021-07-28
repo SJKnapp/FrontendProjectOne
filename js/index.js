@@ -6,7 +6,14 @@
 
     const displayAllTasks = document.querySelector("#renderedTasks");
 
-    const updateTask = (requestBody) => {
+    const updateTask = (requestBody, id) => {
+        axios.put(`${baseUrl}/task/${id}/update`, requestBody)
+        .then(res => {
+            getAllTasks();
+        })
+        .catch(err => {
+            console.log(err);
+        });
     }
 
     const saveTask = (requestBody) => {
@@ -57,7 +64,7 @@
                 'timeEstimateMinutes': `${taskTimeEstimate.value}`
             }
             if(!empty){
-                updateTask(requestBody);
+                updateTask(requestBody , task.id);
             }else{
                 saveTask(requestBody);
             }
