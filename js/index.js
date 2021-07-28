@@ -27,6 +27,16 @@
             });
     }
 
+    const deleteTask = (id) => {
+        axios.delete(`${baseUrl}/task/${id}/delete`)
+        .then(res => {
+            getAllTasks();
+        })
+        .catch(err => {
+            console.log(err);
+        });
+    }
+
     const renderTask = (task, empty) => {
         const renderedTask = document.createElement('div');
 
@@ -73,6 +83,9 @@
         if(!empty){
             const deleteButton = document.createElement('button');
             deleteButton.textContent = 'delete';
+            deleteButton.addEventListener('click', () => {
+                deleteTask(task.id);
+            })
             renderedTask.appendChild(deleteButton); 
         }
         displayAllTasks.appendChild(renderedTask);
