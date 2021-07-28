@@ -90,6 +90,7 @@
     }
 
     const getAllTasks = () => {
+        displayAllTasks.innerHTML = "";
         axios.get(`${baseUrl}/getAll`)
             .then(res=>{
                 console.log(res);
