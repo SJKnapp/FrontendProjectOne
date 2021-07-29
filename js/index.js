@@ -43,6 +43,7 @@
         renderedTask.classList = "row align-self-start";
 
         const taskName = document.createElement('input');
+        taskName.type = 'text';
         taskName.classList = "col-1";
         taskName.value = task.name;
         renderedTask.appendChild(taskName);
@@ -63,17 +64,27 @@
         renderedTask.appendChild(taskTimeEstimate);
 
         const taskDueDate = document.createElement('input');
-        taskDueDate.classList = "col";
+        taskDueDate.classList = "col overdue";
         taskDueDate.type="date";
         taskDueDate.value = task.dueDate;
+        
+        if(task.dueDate = null){
+			renderedTask.classList += " notSet";
+		}
+        else if(task.dueDate >= Date.now){
+			renderedTask.classList += " inDate";
+		}
+		else{
+			renderedTask.classList += " overdue";
+		}
         renderedTask.appendChild(taskDueDate);    
 
         const saveButton = document.createElement('button');
         saveButton.classList = "col";
         saveButton.textContent = 'save';
+        saveButton.type = 'submit';
         renderedTask.appendChild(saveButton); 
-        saveButton.addEventListener('click', () =>{
-
+        saveButton.addEventListener('click', function(e) {
             const requestBody = {
                 'dueDate':`${taskDueDate.value}`,
                 'name':`${taskName.value}`,
