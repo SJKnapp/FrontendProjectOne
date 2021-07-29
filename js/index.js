@@ -41,39 +41,59 @@
 
         const renderedTask = document.createElement('div');
         renderedTask.classList = "row align-self-start";
+        
+        let DueClass = ''; 
+        let today = new Date();
+        today.setHours(0, 0, 0, 0);
+        //today.setHours(0, 0, 0, 0);
+        console.log(today)
+        console.log(task.dueDate);
+        console.log(new Date(task.dueDate))
+        if(task.dueDate === null){
+			DueClass = 'notSet';
+		}
+        else if(new Date(task.dueDate) >= today){
+			DueClass = 'inDate';
+		}
+		else{
+			DueClass = 'overdue';
+		}
 
         const taskName = document.createElement('input');
-        taskName.classList = "col-1";
+        taskName.type = 'text';
+        taskName.classList = `col-1 ${DueClass}`;
         taskName.value = task.name;
         renderedTask.appendChild(taskName);
 
         const taskDesciption = document.createElement('input');
-        taskDesciption.classList = "col";
+        taskDesciption.classList = `col ${DueClass}`;
         taskDesciption.value = task.description;
         renderedTask.appendChild(taskDesciption);
 
         const taskpriority = document.createElement('input');
-        taskpriority.classList = "col";
+        taskpriority.classList = `col ${DueClass}`;
         taskpriority.value = task.priority;
         renderedTask.appendChild(taskpriority);
 
         const taskTimeEstimate = document.createElement('input');
-        taskTimeEstimate.classList = "col";
+        taskTimeEstimate.classList = `col ${DueClass}`;
         taskTimeEstimate.value = task.timeEstimateMinutes;
         renderedTask.appendChild(taskTimeEstimate);
 
         const taskDueDate = document.createElement('input');
-        taskDueDate.classList = "col";
+        taskDueDate.classList = `col ${DueClass}`;
         taskDueDate.type="date";
         taskDueDate.value = task.dueDate;
+        
+        
         renderedTask.appendChild(taskDueDate);    
 
         const saveButton = document.createElement('button');
         saveButton.classList = "col";
         saveButton.textContent = 'save';
+        saveButton.type = 'submit';
         renderedTask.appendChild(saveButton); 
-        saveButton.addEventListener('click', () =>{
-
+        saveButton.addEventListener('click', function(e) {
             const requestBody = {
                 'dueDate':`${taskDueDate.value}`,
                 'name':`${taskName.value}`,
@@ -112,7 +132,7 @@
 
         const emtpyJson =  
             {
-                "dueDate":"",
+                "dueDate":null,
                 "name":"",
                 "description":"",
                 "priority": 0,
