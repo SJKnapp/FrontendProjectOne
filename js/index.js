@@ -79,7 +79,7 @@
         renderedTask.appendChild(taskName);
 
         const taskDesciption = document.createElement('input');
-        taskDesciption.classList = `col ${DueClass}`;
+        taskDesciption.classList = `col-4 ${DueClass}`;
         taskDesciption.value = task.description;
         renderedTask.appendChild(taskDesciption);
 
@@ -137,6 +137,7 @@
             let status = 'true';
             if(task.done === true ){
 				markCompleate.textContent = 'not done';
+				 status = 'false';
 			}
 			else{
             	markCompleate.textContent = 'done';
