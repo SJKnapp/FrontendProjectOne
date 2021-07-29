@@ -51,9 +51,6 @@
 
         let renderedTask = document.createElement('div');
 		
-		if(task.done===true){
-			renderedTask = document.createElement('s');
-		}
         renderedTask.classList = "row align-self-start";
         
         let DueClass = ''; 
