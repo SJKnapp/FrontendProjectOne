@@ -36,10 +36,23 @@
             console.log(err);
         });
     }
+    
+    const updateStatus = (id, status) => {
+		axios.patch(`${baseUrl}/task/${id}/status/${status}`)
+        	.then(res => {
+            	getAllTasks();
+        	})
+        	.catch(err => {
+            	console.log(err);
+        	});
+	}
 
     const renderTask = (task, empty) => {
 
-        const renderedTask = document.createElement('div');
+        let renderedTask = document.createElement('div');
+        if(task.done === 'true'){
+			renderedTask = document.createElement('p')
+		}
         renderedTask.classList = "row align-self-start";
         
         let DueClass = ''; 
@@ -116,10 +129,21 @@
                 deleteTask(task.id);
             })
             renderedTask.appendChild(deleteButton); 
+            
+            const markCompleate = document.createElement('button');
+            markCompleate.classList = 'col';
+            markCompleate.textContent = 'compleate';
+            markCompleate.addEventListener('click', () => {
+                updateStatus(task.id, 'true');
+            })
+            renderedTask.appendChild(markCompleate);
         }else{
-			const emptyEllement = document.createElement('div');
-			emptyEllement.classList = 'col';
-			renderedTask.appendChild(emptyEllement)
+			const emptyEllement1 = document.createElement('div');
+			emptyEllement1.classList = 'col';
+			renderedTask.appendChild(emptyEllement1);
+			const emptyEllement2 = document.createElement('div');
+			emptyEllement2.classList = 'col';
+			renderedTask.appendChild(emptyEllement2);
 		}
         displayAllTasks.appendChild(renderedTask);
     }
