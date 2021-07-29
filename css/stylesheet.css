@@ -12,3 +12,8 @@
 	background-color: #3CBC8D;
 	color: blue;
 }
+
+.done{
+	background-color: rgb(255, 128, 255);
+	color: rgb(255, 255, 0);
+}
